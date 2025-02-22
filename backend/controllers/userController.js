@@ -7,7 +7,7 @@ exports.registerUser=async(req,res,next)=>{
     const user=await User.create({email,username,password});
     res.status(200).json({
         success:true,
-        message:"Api performed successfully"
+        user
     })
    }catch(err){
     console.log(err)
