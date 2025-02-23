@@ -16,10 +16,10 @@ const userSchema= new mongoose.Schema({
         required:[true,"Enter password"],
         
     },
-    list:{
+    list:[{
         type:mongoose.Types.ObjectId,
         ref:"list"
-    }
+    }]
 })
 
 const User=mongoose.model('user',userSchema);
