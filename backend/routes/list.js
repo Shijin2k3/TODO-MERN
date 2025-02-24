@@ -4,7 +4,7 @@ const router=express.Router();
 
 
 router.route('/addTask').post(addTask);
-router.route('/updateTask').put(updateTask);
+router.route('/updateTask/:id').put(updateTask);
 
 
 
