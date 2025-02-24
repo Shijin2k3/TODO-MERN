@@ -41,9 +41,10 @@ exports.updateTask=async(req,res,next) => {
     const {title,description,email}= req.body;
     const existingUser=await User.findOne({email});
     if(existingUser){
-       const list=await List.findByIdAndUpdate(req.params.id,{ title,description});
-       res.status(200).json({
+       let list=await List.findByIdAndUpdate(req.params.id.trim(),{ title,description},{ new: true, runValidators: true });
+       return res.status(200).json({
         succes:true,
+        message:"task Updated",
         list
        })
 
@@ -64,3 +65,35 @@ exports.updateTask=async(req,res,next) => {
     });
  }
 }
+//delete task
+exports.deleteTask=async(req,res,next) => {
+    try{
+    const {email}= req.body;
+    const existingUser=await User.findOne({email});
+    if(existingUser){
+       let list=await List.findByIdAndDelete(req.params.id);
+       res.status(200).json({
+        succes:true,
+        message:"task deleted",
+    
+        
+       })
+
+
+
+    }
+    else {
+        res.status(404).json({
+            success: false,
+            message: 'User  not found'
+        });
+    }
+ }catch(err){
+    console.log(err)
+    res.status(500).json({
+        success: false,
+        message: 'Internal server error'
+    });
+ }
+}
+
