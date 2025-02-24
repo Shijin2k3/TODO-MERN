@@ -6,7 +6,7 @@ exports.addTask=async(req,res,next) => {
     const {title,description,email}= req.body;
     const existingUser=await User.findOne({email});
     if(existingUser){
-        const list=await List({title,description,user:existingUser._id});
+        const list=await new  List({title,description,user:existingUser._id});
         if (!existingUser.list) {
             existingUser.list = []; 
         }
@@ -18,6 +18,35 @@ exports.addTask=async(req,res,next) => {
             success:true,
             list
         })
+
+
+    }
+    else {
+        res.status(404).json({
+            success: false,
+            message: 'User  not found'
+        });
+    }
+ }catch(err){
+    console.log(err)
+    res.status(500).json({
+        success: false,
+        message: 'Internal server error'
+    });
+ }
+}
+// update task
+exports.updateTask=async(req,res,next) => {
+    try{
+    const {title,description,email}= req.body;
+    const existingUser=await User.findOne({email});
+    if(existingUser){
+       const list=await List.findByIdAndUpdate(req.params.id,{ title,description});
+       res.status(200).json({
+        succes:true,
+        list
+       })
+
 
 
     }

@@ -1,9 +1,10 @@
 const express=require('express');
-const { addTask } = require('../controllers/listController');
+const { addTask, updateTask } = require('../controllers/listController');
 const router=express.Router();
 
 
 router.route('/addTask').post(addTask);
+router.route('/updateTask').put(updateTask);
 
 
 
