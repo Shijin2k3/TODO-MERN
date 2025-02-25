@@ -69,7 +69,7 @@ exports.updateTask=async(req,res,next) => {
 exports.deleteTask=async(req,res,next) => {
     try{
     const {email}= req.body;
-    const existingUser=await User.findOne({email});
+    const existingUser=await User.findOneAndUpdate({email},{$pull:{list : req.params.id}});
     if(existingUser){
        let list=await List.findByIdAndDelete(req.params.id);
        res.status(200).json({
