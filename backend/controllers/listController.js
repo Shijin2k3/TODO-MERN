@@ -18,8 +18,6 @@ exports.addTask=async(req,res,next) => {
             success:true,
             list
         })
-
-
     }
     else {
         res.status(404).json({
@@ -47,9 +45,6 @@ exports.updateTask=async(req,res,next) => {
         message:"task Updated",
         list
        })
-
-
-
     }
     else {
         res.status(404).json({
@@ -75,12 +70,7 @@ exports.deleteTask=async(req,res,next) => {
        res.status(200).json({
         succes:true,
         message:"task deleted",
-    
-        
        })
-
-
-
     }
     else {
         res.status(404).json({
@@ -97,3 +87,17 @@ exports.deleteTask=async(req,res,next) => {
  }
 }
 
+exports.getTask= async (req,res,next) =>{
+ try{  const list=await List.find({user:req.params.id});
+   res.status(200).json({
+    success:true,
+    list
+   })
+}
+catch(err){
+    console.log(err)
+    res.status(400).json({
+        message:"cant get"
+    })
+}
+}
