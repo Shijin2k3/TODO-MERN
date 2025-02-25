@@ -89,15 +89,24 @@ exports.deleteTask=async(req,res,next) => {
 
 exports.getTask= async (req,res,next) =>{
  try{  const list=await List.find({user:req.params.id});
+
+ if(list.length !== 0){
    res.status(200).json({
     success:true,
     list
    })
+  }else{
+    res.status(200).json({
+        success:true,
+        message:"No Task"
+       })
+  }
+
 }
 catch(err){
     console.log(err)
     res.status(400).json({
-        message:"cant get"
+        message:"Internal server Error"
     })
 }
 }
