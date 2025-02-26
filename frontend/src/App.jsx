@@ -1,3 +1,4 @@
+import { Navbar } from "./components/navbar/Navbar"
 
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
   return (
     
       <div>
-        <h1>To do List</h1>
+      <Navbar />
       </div>
       
 
