@@ -7,7 +7,7 @@ export const Home = () => {
             <h1 className='font-bold text-[3.5rem]'>Organize Your work  <br /> and life,finally</h1>
             <p className=''>Become focused organized and calm with <br />Todo App
             The World's #1 task manager app</p>
-            <button className='bg-gray-200 px-[2rem] py-[0.5rem] rounded-full mt-2 text-center border-[#c8c9cc]'>Make Todo List</button>
+            <button className='bg-gray-200 px-[2rem] py-[0.5rem] rounded-full mt-2 text-center border-[1px] border-gray-500'>Make Todo List</button>
         </div>
     </div>
   )
