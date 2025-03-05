@@ -11,7 +11,7 @@ export const Navbar = () => {
 
   return (
     <div className='"w-[100%] h-[100vh]"'>
-      <div className='md:absolute w-[100%] h-[12vh] bg-gray-200 flex  justify-between  items-center px-4 md:px-10 '>
+      <div className=' w-[100%] h-[12vh] bg-gray-200 flex  justify-between  items-center px-4 md:px-10 '>
         <h1 className='text-black text-2xl font-bold'>TODO</h1>
         <div className='flex items-center flex-col '>
            {/* <div className=' h-auto md:hidden '>
@@ -20,7 +20,7 @@ export const Navbar = () => {
              </button>
            </div> */}
             
-           <div className='flex flex-col  md:flex-row  gap-4 md:gap-7 items-center right-0 top-19'>
+           <div className='flex flex-row  gap-4 md:gap-7 items-center right-0 top-19'>
               <div><a href="" className='text-black font-medium'>Home</a></div>
                <div ><a href="" className='text-black font-medium'>About Us</a></div>
                <div ><a href="" className='text-black font-medium'> Todo</a></div>
