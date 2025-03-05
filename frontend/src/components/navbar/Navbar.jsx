@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { CiMenuBurger } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isOpen,setIsOpen]=useState(false);
@@ -21,12 +22,12 @@ export const Navbar = () => {
            </div> */}
             
            <div className='flex flex-row  gap-4 md:gap-7 items-center right-0 top-19'>
-              <div><a href="" className='text-black font-medium'>Home</a></div>
-               <div ><a href="" className='text-black font-medium'>About Us</a></div>
-               <div ><a href="" className='text-black font-medium'> Todo</a></div>
-               <div ><a href="" className='text-black font-medium'>SignUp</a></div>
-               <div ><a href="" className='text-black font-medium'>SignIn</a></div>
-               <div ><a href="" className='text-black font-medium'>Logout</a></div>
+              <div><Link to='/' className='text-black font-medium'>Home</Link></div>
+               <div ><Link to='/about' className='text-black font-medium'>About Us</Link></div>
+               <div ><Link to='/Todo' className='text-black font-medium'> Todo</Link></div>
+               <div ><Link to='/signup' className='text-black font-medium'>SignUp</Link></div>
+               <div ><Link to='/signin' className='text-black font-medium'>SignIn</Link></div>
+               <div ><Link to='/logout' className='text-black font-medium'>Logout</Link></div>
             </div>
         </div> 
 
