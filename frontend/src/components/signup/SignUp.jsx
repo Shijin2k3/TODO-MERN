@@ -5,25 +5,29 @@ export const SignUp = () => {
     <div className='w-[100%] h-[88vh] px-10'>
       <div className=' '>
         <div className='flex justify-between '>
-          <div className='w-[50%] h-screen flex justify-center items-center '>
-            <div className='flex '>
-              <form className='flex flex-col' action="">
+          <div className='w-[100%] p-5 h-screen flex justify-center items-center '>
+            <div className='w-full py-14  rounded-lg shadow-xl bg-white font-medium flex  justify-center '>
+              
+              <form className='w-[35%] flex flex-col' action="">
+                <h1 className='my-3 font-medium'>If you don't have an Account. Please SignUp... </h1>  
                 <input
-                 className='p-2 mb-2' type="email" name="email"
+                 className='p-2 my-3 border-2 border-gray-500 rounded-2xl outline-none' type="email" name="email"
+
                   placeholder='Enter Your Email' autoComplete='off'
                 />
                 <input
-                 className='p-2 mb-2' type="text"  name="username"
+                 className='p-2 my-3 border-2 border-gray-500 rounded-2xl outline-none' type="text"  name="username"
                   placeholder='Enter Your Username' autoComplete='off' 
                 />
                 <input
-                 className='p-2 mb-2' type="password" name="password"
+                 className='p-2 my-3 border-2 border-gray-500 rounded-2xl outline-none' type="password" name="password"
                   placeholder='Enter Your Password' autoComplete='off'
                 />
+                <button type='submit' className= 'my-3 bg-black font-bold text-xl text-gray-300 py-4 rounded-2xl cursor-pointer hover:bg-gray-950'>SignUp</button>
               </form>
             </div>
           </div>
-          <div className='w-[50%] text-center'>X</div>
+         
         </div>
       </div>
     </div>
