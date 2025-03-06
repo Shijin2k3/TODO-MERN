@@ -3,13 +3,10 @@ import { CiMenuBurger } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
-  const [isOpen,setIsOpen]=useState(false);
-  
-  const toggleMenu =() =>{
-    setIsOpen(!isOpen)
-  }
-
-
+  // const [isOpen,setIsOpen]=useState(false);
+  // const toggleMenu =() =>{
+  //   setIsOpen(!isOpen)
+  // }
   return (
     <div className='"w-[100%] h-[100vh]"'>
       <div className=' w-[100%] h-[12vh] bg-gray-200 flex  justify-between  items-center px-4 md:px-10 '>
@@ -20,9 +17,8 @@ export const Navbar = () => {
              <CiMenuBurger size={24} />
              </button>
            </div> */}
-            
            <div className='flex flex-row  gap-4 md:gap-7 items-center right-0 top-19'>
-              <div><Link to='/' className='text-black font-medium'>Home</Link></div>
+               <div><Link to='/' className='text-black font-medium'>Home</Link></div>
                <div ><Link to='/about' className='text-black font-medium'>About Us</Link></div>
                <div ><Link to='/Todo' className='text-black font-medium'> Todo</Link></div>
                <div ><Link to='/signup' className='text-black font-medium'>SignUp</Link></div>
@@ -30,9 +26,7 @@ export const Navbar = () => {
                <div ><Link to='/logout' className='text-black font-medium'>Logout</Link></div>
             </div>
         </div> 
-
-      </div>
-      
+      </div>    
     </div>
   )
 }
