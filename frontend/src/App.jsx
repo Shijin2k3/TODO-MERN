@@ -6,6 +6,7 @@ import { Navbar } from "./components/navbar/Navbar"
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import { SignIn } from "./components/signin/SignIn";
 import { SignUp } from "./components/signup/SignUp";
+import { Todo } from "./components/todo/Todo";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
               <Routes>
                 <Route exact path="/" element={ <Home />}/>
                 <Route  path="/about" element={ <About />}/>
+                <Route  path="/todo" element={ <Todo />}/>
                 <Route  path="/signin" element={ <SignIn />}/>
                 <Route  path="/signup" element={ <SignUp />}/>
               </Routes>
