@@ -5,8 +5,8 @@ export const SignUp = () => {
     <div className='w-[100%] h-[88vh] px-10'>
       <div className=' '>
         <div className='flex justify-between '>
-          <div className='w-[100%] p-5 h-screen flex justify-center items-center '>
-            <div className='w-full py-14  rounded-lg shadow-xl bg-white font-medium flex  justify-center '>
+          <div className='w-[100%] p-5 my-10 flex justify-center items-center '>
+            <div className='w-full py-14  rounded-lg shadow-2xs bg-white font-medium flex  justify-center '>
               
               <form className='w-[35%] flex flex-col' action="">
                 <h1 className='my-3 font-medium'>If you don't have an Account. Please SignUp... </h1>  
