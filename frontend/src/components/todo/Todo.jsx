@@ -43,6 +43,9 @@ export const Todo = () => {
     setIsUpdateVisible(false);
     toast.success("Task updated successfully");
   };
+  const handleUpdateClose =() =>{
+    setIsUpdateVisible(false);
+  }
 
   return (
     <>
@@ -91,6 +94,7 @@ export const Todo = () => {
                 inputs={inputs} 
                 handleChange={handleChange} 
                 handleUpdateSubmit={handleUpdateSubmit} 
+                handleUpdateClose={handleUpdateClose}
               />
             </div>
           </div>
