@@ -2,7 +2,7 @@ import React from 'react'
 import {AiFillDelete} from 'react-icons/ai'
 import {GrDocumentUpdate} from 'react-icons/gr'
 
-const TodoCards = ({title,description}) => {
+const TodoCards = ({title,description,id,delId}) => {
   return (
     <div className='w-50 h-25 p-3 overflow-hidden border-[1px] border-black'>
       <div className='flex flex-col overflow-clip'>
@@ -13,7 +13,7 @@ const TodoCards = ({title,description}) => {
         <div className='flex cursor-pointer'><GrDocumentUpdate className='text-[20px] cursor-pointer' />
         <p className='text-[0.9rem]'>Update</p> 
         </div>
-        <div className='flex cursor-pointer'>
+        <div className='flex cursor-pointer ' onClick={() =>delId(id)}>
           <AiFillDelete className='text-[20px] text-red-600 cursor-pointer' />
           <p className='text-[0.9rem]'>Delete</p>
           </div>

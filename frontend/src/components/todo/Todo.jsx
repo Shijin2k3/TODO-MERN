@@ -14,6 +14,10 @@ export const Todo = () => {
        setArray([...array,inputs])
        setInputs({title:"",description:""})
    }
+   const del=(id)=>{
+    array.splice(id,"1");
+    setArray([...array]);
+   }
 
   return (
     <div className='w-[100%] min-h-[88vh]'>
@@ -44,7 +48,7 @@ export const Todo = () => {
           <div className=' flex  flex-row flex-wrap justify-items-start'>
             {array && array.map((item,i)=>(
              <div className= 'w-[20%] h-[8vh] flex items-center justify-center columns-lg  mx-5 my-10'>
-             <TodoCards title={item.title} description={item.description}/>
+             <TodoCards title={item.title} description={item.description} id={i} delId={del}/>
              </div>
              ))}
             
