@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import TodoCards from './TodoCards';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export const Todo = () => {
    const[inputs,setInputs]=useState({title:"",description:""});
@@ -11,16 +13,24 @@ export const Todo = () => {
    }
    const handleSubmit=(e) =>{
        e.preventDefault()
+       if(!inputs.title ||  !inputs.description){
+        toast.error("Please Enter Title and Description ")
+       }else{
+
        setArray([...array,inputs])
        setInputs({title:"",description:""})
+       toast.success("Your Task is added")
+       }
    }
    const del=(id)=>{
     array.splice(id,"1");
     setArray([...array]);
+    toast.success("Task is deleted Successfully")
    }
 
   return (
     <div className='w-[100%] min-h-[88vh]'>
+       <ToastContainer />
       <div className='w-[60%] mx-[20%]  flex  justify-center items-center  shadow-xl '>
         <div className='flex flex-col my-3 w-100 '>
             <h1 className='font-extrabold text-2xl my-1'>MY TODO</h1>
