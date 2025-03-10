@@ -2,20 +2,20 @@ import React from 'react';
 
 const Update = ({ inputs, handleChange, handleUpdateSubmit,handleUpdateClose }) => {
   return (
-    <div className='w-[80%] mx-10 fixed p-5 flex flex-col bg-blue-700 justify-center items-center'>
-      <h1 className='w-[70%]'>Update Your Task</h1>
+    <div className='w-[80%] mx-10 fixed p-5 py-10 my-10 flex flex-col bg-white justify-center items-center border-2 border-gray-500 rounded-2xl'>
+      <h1 className='w-[70%] font-extrabold text-2xl my-1'>Update Your Task</h1>
       <input
         type="text"
         name="title"
         value={inputs.title}
         onChange={handleChange}
-        className='bg-white my-2 w-[70%] p-2'
+        className='bg-white  w-[70%] outline-none border-2 border-gray-500 rounded-2xl my-2 p-2 '
       />
       <textarea
         name="description"
         value={inputs.description}
         onChange={handleChange}
-        className='bg-white my-2 w-[70%] p-2'
+        className='bg-white  w-[70%] outline-none border-2 border-gray-500 rounded-2xl my-2 p-2'
       ></textarea>
       <div className='flex justify-between gap-30'>
       <button

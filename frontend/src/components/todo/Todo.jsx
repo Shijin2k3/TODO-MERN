@@ -88,7 +88,7 @@ export const Todo = () => {
       </div>
     </div>
     {isUpdateVisible && (
-          <div className='absolute w-[100%] h-[50vh] bg-amber-300 top-[80px] left-0'>
+          <div className='absolute w-[100%] h-[50vh] bg-white top-[80px] left-0'>
             <div className='px-10'>
               <Update 
                 inputs={inputs} 
