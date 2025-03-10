@@ -6,6 +6,7 @@ const connectDatabase = require('./config/database');
 
 
 
+
 dotenv.config({path:path.join(__dirname,"config/config.env")});
 connectDatabase()
 

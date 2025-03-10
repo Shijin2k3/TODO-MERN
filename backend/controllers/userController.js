@@ -9,6 +9,7 @@ exports.registerUser=async(req,res,next)=>{
     const user=await User.create({email,username,password:hashPassword});
     res.status(200).json({
         success:true,
+        message:"user Sign up successfully",
         user
     })
    }catch(err){
