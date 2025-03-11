@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export const SignUp = () => {
@@ -9,6 +10,7 @@ export const SignUp = () => {
   username:"",
   password:""
  })
+ const navigate=useNavigate();
  
 
   const handleChange =(e) =>{
@@ -17,22 +19,29 @@ export const SignUp = () => {
   }
   const handleSubmit=async(e)=>{
     e.preventDefault()
-    await axios.post("http://localhost:8000/api/v1/register",inputs).then(response => {
-      console.log(response.data);
-      setInputs({
+    await axios.post("http://localhost:8000/api/v1/register",inputs)
+      .then(response => {   
+       alert(response.data.message);   
+        setInputs({
         email:"",
         username:"",
         password:""
        })
+       navigate('/signin')
+      
     })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-    setInputs({
-      email:"",
-      username:"",
-      password:""
-     })
+     .catch(error => {
+      if (error.response) {
+        // Handle specific error messages
+        if (error.response.status === 400) {
+          toast.error(error.response.data.message || 'Internal server Error');
+        } else {
+          toast.error('An unexpected error occurred. Please try again.');
+        }
+      } else {
+        toast.error('Network error. Please check your connection.');
+      }
+    })
     //  console.log(inputs)
     //  toast.success("Registered Successfully")
   }
