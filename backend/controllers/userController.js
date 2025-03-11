@@ -7,13 +7,13 @@ exports.registerUser=async(req,res,next)=>{
     const {email,username,password}=req.body;
     const hashPassword=bcrypt.hashSync(password)
     const user=await User.create({email,username,password:hashPassword});
-    res.status(200).json({
+     return res.status(200).json({
         success:true,
         message:"user Sign up successfully",
         user
     })
    }catch(err){
-    res.status(400).json({
+    return res.status(400).json({
         success:false,
         message:"user already exist",
         error:err.message
@@ -27,27 +27,30 @@ exports.loginUser=async(req,res,next) => {
     try{
         const user= await User.findOne({email:req.body.email});
         if(!user){
-            res.status(400).json({
+           return res.status(400).json({
                 success:false,
                 message:"Please Register first"
             })
         }
         const isPasswordCorrect= bcrypt.compareSync(req.body.password,user.password);
        if(!isPasswordCorrect){
-            res.status(400).json({
+           return res.status(401).json({
                 success:false,
                 message:"Incorrect Password"
             })
         }
         const {password,...others}=user._doc;
-        res.status(200).json({
+         return res.status(200).json({
             success:true,
-            others
+            message:"Your Login Was Successfull",
+            user:others
         })
 
     }catch(err){
-        res.status(400).json({
+       return res.status(500).json({
             success:false,
+            message: "Internal server error",
+
             error:err.message
         }) 
     }

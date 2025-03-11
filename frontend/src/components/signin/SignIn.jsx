@@ -1,6 +1,46 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export const SignIn = () => {
+   const [inputs,setInputs]=useState({
+    email:"",
+    password:""
+   })
+   const navigate=useNavigate();
+    const handleChange =(e) =>{
+       const {name,value}=e.target;
+       setInputs({...inputs,[name]:value})
+     }
+    const handleSubmit=async(e)=>{
+       e.preventDefault()
+       await axios.post("http://localhost:8000/api/v1/login",inputs)
+         .then(response => {   
+         console.log((response.data.user._id));  
+         navigate("/todo") 
+         
+         
+       })
+        .catch(error => {
+           if (error.response) {
+                  // Handle specific error messages
+                  if (error.response.status === 500) {
+                    alert(error.response.data.message || 'Internal server');
+                  }
+                  else if (error.response.status === 404) {
+                    alert(error.response.data.message || 'User doesnt exist');
+                  }
+                  else if (error.response.status === 401) {
+                    alert(error.response.data.message || 'incorrect password');
+                  } else {
+                    alert('An unexpected error occurred. Please try again.');
+                  }
+                } else {
+                  alert('Network error. Please check your connection.');
+                }
+              })
+    
+      }
   return (
     <div className='w-[100%] h-[88vh] px-10'>
       <div className=' '>
@@ -13,13 +53,13 @@ export const SignIn = () => {
                 <input
                  className='p-2 my-3 border-2 border-gray-500 rounded-2xl outline-none' type="email" name="email"
 
-                  placeholder='Enter Your Email' autoComplete='off'
+                  placeholder='Enter Your Email' autoComplete='off' value={inputs.email} onChange={handleChange}
                 />
                 <input
                  className='p-2 my-3 border-2 border-gray-500 rounded-2xl outline-none' type="password" name="password"
-                  placeholder='Enter Your Password' autoComplete='off'
+                  placeholder='Enter Your Password' autoComplete='off' value={inputs.password} onChange={handleChange}
                 />
-                <button type='submit' className= 'my-3 bg-black font-bold text-xl text-gray-300 py-4 rounded-2xl cursor-pointer hover:bg-gray-950'>
+                <button type='submit'onClick={handleSubmit} className= 'my-3 bg-black font-bold text-xl text-gray-300 py-4 rounded-2xl cursor-pointer hover:bg-gray-950'>
                   SignIn
                   </button>
               </form>
