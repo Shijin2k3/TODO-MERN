@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { CiMenuBurger } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 export const Navbar = () => {
   // const [isOpen,setIsOpen]=useState(false);
   // const toggleMenu =() =>{
   //   setIsOpen(!isOpen)
   // }
+  const isLoggedIn=useSelector((state)=>state.isLoggedIn);
+  
   return (
     <div className='"w-[100%] h-[100vh]"'>
       <div className=' w-[100%] h-[12vh] bg-gray-200 flex  justify-between  items-center px-4 md:px-10 '>
@@ -21,10 +24,16 @@ export const Navbar = () => {
                <div><Link to='/' className='text-black font-medium'>Home</Link></div>
                <div ><Link to='/about' className='text-black font-medium'>About Us</Link></div>
                <div ><Link to='/todo' className='text-black font-medium'> Todo</Link></div>
+               {!isLoggedIn &&( <>
                <div ><Link to='/signup' className='text-black font-medium'>SignUp</Link></div>
                <div ><Link to='/signin' className='text-black font-medium'>SignIn</Link></div>
+               </>
+               )}
+               {isLoggedIn && 
                <div ><Link to='/logout' className='text-black font-medium'>Logout</Link></div>
+               }          
             </div>
+            
         </div> 
       </div>    
     </div>
