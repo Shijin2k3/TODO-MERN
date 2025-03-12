@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { authActions } from '../../store';
 
 export const SignIn = () => {
+   const dispatch=useDispatch()//allows you to send actions that can modify the state in your Redux store
    const [inputs,setInputs]=useState({
     email:"",
     password:""
@@ -16,7 +19,8 @@ export const SignIn = () => {
        e.preventDefault()
        await axios.post("http://localhost:8000/api/v1/login",inputs)
          .then(response => {   
-         console.log((response.data.user._id));  
+         sessionStorage.setItem("id",response.data.user._id)  
+        dispatch(authActions.login())
          navigate("/todo") 
          
          
