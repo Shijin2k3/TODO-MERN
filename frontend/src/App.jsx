@@ -7,10 +7,19 @@ import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import { SignIn } from "./components/signin/SignIn";
 import { SignUp } from "./components/signup/SignUp";
 import { Todo } from "./components/todo/Todo";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { authActions } from "./store";
 
 
 function App() {
-
+  const dispatch =useDispatch();
+ useEffect(()=>{
+   const id =sessionStorage.getItem("id");//logout
+   if(id){
+   dispatch(authActions.login())
+   }
+ },[])
 
   return (
     

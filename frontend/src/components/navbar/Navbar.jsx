@@ -1,14 +1,22 @@
 import React, { useState } from 'react'
 import { CiMenuBurger } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { authActions } from '../../store';
 
 export const Navbar = () => {
   // const [isOpen,setIsOpen]=useState(false);
   // const toggleMenu =() =>{
   //   setIsOpen(!isOpen)
   // }
+  //useSelector - convenient way to access Redux state in functional components
   const isLoggedIn=useSelector((state)=>state.isLoggedIn);
+  const dispatch=useDispatch();
+
+  const logout=()=>{
+    sessionStorage.clear('id')
+    dispatch(authActions.logout())
+  }
   
   return (
     <div className='"w-[100%] h-[100vh]"'>
@@ -30,7 +38,7 @@ export const Navbar = () => {
                </>
                )}
                {isLoggedIn && 
-               <div ><Link to='/logout' className='text-black font-medium'>Logout</Link></div>
+               <div onClick={logout} ><Link to='/' className='text-black font-medium' >Logout</Link></div>
                }          
             </div>
             
