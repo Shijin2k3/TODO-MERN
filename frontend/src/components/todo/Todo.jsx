@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TodoCards from './TodoCards';
 import { ToastContainer, toast } from 'react-toastify';
 import Update from './Update';
+import axios from 'axios';
+
+let id =sessionStorage.getItem("id");
 
 
 export const Todo = () => {
@@ -10,19 +13,40 @@ export const Todo = () => {
     const [isUpdateVisible, setIsUpdateVisible] = useState(false);
     const [currentId, setCurrentId] = useState(null);
 
+   
+
    const handleChange =(e)=>{
       const {name,value}=e.target;
       setInputs({...inputs,[name]:value});
    }
-   const handleSubmit=(e) =>{
+   const handleSubmit= async(e) =>{
        e.preventDefault()
        if(!inputs.title ||  !inputs.description){
         toast.error("Please Enter Title and Description ")
        }else{
-
-       setArray([...array,inputs])
-       setInputs({title:"",description:""})
-       toast.success("Your Task is added")
+          if(id){
+            try {
+              const response = await axios.post("http://localhost:8000/api/v1/addTask", {
+                  title: inputs.title,
+                  description: inputs.description,
+                  id: id
+              });
+              console.log(response); // This will log the response if the request is successful
+          } catch (error) {
+              console.error("Error adding task:", error); // Log the error if the request fails
+              toast.error("Failed to add task. Please try again.");
+          }
+         
+          setInputs({title:"",description:""})
+          toast.success("Your Task is added")
+          
+          }else{
+            setArray([...array,inputs])
+            setInputs({title:"",description:""})
+            toast.success("Your Task is added")
+            toast.error("Your Task is not saved Please Sign in")
+          }
+     
        }
    }
    const del=(id)=>{
@@ -46,6 +70,15 @@ export const Todo = () => {
   const handleUpdateClose =() =>{
     setIsUpdateVisible(false);
   }
+  useEffect(()=>{
+    const fetch= async()=>{
+      await axios.get(`http://localhost:8000/api/v1/getTask/${id}`)
+      .then((response)=>{
+        setArray(response.data.list)
+     } )
+    }
+  fetch();
+  },[handleSubmit])
 
   return (
     <>
@@ -77,7 +110,7 @@ export const Todo = () => {
         <div className='mx-20'>
           <div className=' flex  flex-row flex-wrap justify-items-start'>
             {array && array.map((item,i)=>(
-             <div className= 'w-[20%] h-[8vh] flex items-center justify-center columns-lg  mx-5 my-10'>
+             <div key={i} className= 'w-[20%] h-[8vh] flex items-center justify-center columns-lg  mx-5 my-10'>
              <TodoCards title={item.title} description={item.description} id={i} delId={del} onUpdate={handleUpdateClick}/>
              </div>
              ))}
