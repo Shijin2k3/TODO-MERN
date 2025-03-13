@@ -49,10 +49,16 @@ export const Todo = () => {
      
        }
    }
-   const del=(id)=>{
-    array.splice(id,"1");
-    setArray([...array]);
-    toast.success("Task is deleted Successfully")
+   const del=async(taskId)=>{
+    await axios.delete(`http://localhost:8000/api/v1/deleteTask/${taskId}`,{
+      data:{id:id},
+    })
+    .then(()=>{
+      toast.success("Task is deleted Successfully")
+    })
+    // array.splice(id,"1");
+    // setArray([...array]);
+   
    }
    const handleUpdateClick=(id) =>{
     setCurrentId(id);
@@ -111,7 +117,7 @@ export const Todo = () => {
           <div className=' flex  flex-row flex-wrap justify-items-start'>
             {array && array.map((item,i)=>(
              <div key={i} className= 'w-[20%] h-[8vh] flex items-center justify-center columns-lg  mx-5 my-10'>
-             <TodoCards title={item.title} description={item.description} id={i} delId={del} onUpdate={handleUpdateClick}/>
+             <TodoCards title={item.title} description={item.description} id={item._id} delId={del} onUpdate={handleUpdateClick}/>
              </div>
              ))}
             
