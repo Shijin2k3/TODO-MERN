@@ -2,7 +2,7 @@ import React from 'react'
 import {AiFillDelete} from 'react-icons/ai'
 import {GrDocumentUpdate} from 'react-icons/gr'
 
-const TodoCards = ({title,description,id,delId,onUpdate}) => {
+const TodoCards = ({title,description,id,delId,onUpdate,updateId}) => {
   return (
     <div className='w-60 h-28 p-3 overflow-hidden border-[1px] border-black'>
       <div className='flex flex-col overflow-clip'>
@@ -10,7 +10,9 @@ const TodoCards = ({title,description,id,delId,onUpdate}) => {
         <p className='text-gray-500 text-[0.9rem] max-w-50'>{description.split("",40)}...</p>
       </div>
       <div className='flex justify-around my-2 '>
-        <div className='flex cursor-pointer' onClick={() =>onUpdate(id)}>
+        <div className='flex cursor-pointer' onClick={() =>{onUpdate(id)
+          console.log(updateId)
+        }}>
           <GrDocumentUpdate className='text-[20px] cursor-pointer' />
         <p className='text-[0.9rem]'>Update</p> 
         </div>

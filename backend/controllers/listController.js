@@ -35,11 +35,18 @@ exports.addTask=async(req,res,next) => {
 }
 // update task
 exports.updateTask=async(req,res,next) => {
+    
     try{
-    const {title,description,email}= req.body;
-    const existingUser=await User.findOne({email});
+        const id=req.body.user;
+    const taskId=req.body._id;    
+    const {title,description}= req.body;
+    const existingUser=await User.findById(id);
+    console.log(existingUser)
     if(existingUser){
-       let list=await List.findByIdAndUpdate(req.params.id.trim(),{ title,description},{ new: true, runValidators: true });
+       let list=await List.findByIdAndUpdate(taskId.trim(),{ title,description},{ new: true, runValidators: true });
+       if(!list){
+        return res.status(404).json({ message: "Task not found" });
+       }
        return res.status(200).json({
         succes:true,
         message:"task Updated",

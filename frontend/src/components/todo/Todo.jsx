@@ -17,7 +17,7 @@ export const Todo = () => {
 
    const handleChange =(e)=>{
       const {name,value}=e.target;
-      setInputs({...inputs,[name]:value});
+      setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
    }
    const handleSubmit= async(e) =>{
        e.preventDefault()
@@ -29,9 +29,12 @@ export const Todo = () => {
               const response = await axios.post("http://localhost:8000/api/v1/addTask", {
                   title: inputs.title,
                   description: inputs.description,
-                  id: id
+                  id: sessionStorage.getItem("id"),
               });
-              console.log(response); // This will log the response if the request is successful
+              console.log(response);
+              setInputs({ title: "", description: "" }); // Reset inputs after successful submission
+            toast.success("Your Task is added");
+              // This will log the response if the request is successful
           } catch (error) {
               console.error("Error adding task:", error); // Log the error if the request fails
               toast.error("Failed to add task. Please try again.");
@@ -41,49 +44,76 @@ export const Todo = () => {
           toast.success("Your Task is added")
           
           }else{
-            setArray([...array,inputs])
+            
             setInputs({title:"",description:""})
-            toast.success("Your Task is added")
             toast.error("Your Task is not saved Please Sign in")
           }
      
        }
    }
    const del=async(taskId)=>{
-    await axios.delete(`http://localhost:8000/api/v1/deleteTask/${taskId}`,{
-      data:{id:id},
-    })
-    .then(()=>{
-      toast.success("Task is deleted Successfully")
-    })
+    if(id){
+      await axios.delete(`http://localhost:8000/api/v1/deleteTask/${taskId}`,{
+        data:{id:id},
+      })
+      .then(()=>{
+        toast.success("Task is deleted Successfully")
+      })
+    }else{
+      toast.error("Please Signup first")
+    }
+   
     // array.splice(id,"1");
     // setArray([...array]);
    
    }
    const handleUpdateClick=(id) =>{
     setCurrentId(id);
-    setInputs(array[id]); // Set inputs to the current todo item
-    setIsUpdateVisible(true);
+    const itemIndex = array.findIndex(item => item._id === id);
+    if (itemIndex !== -1) {
+        // Set currentId to the actual task ID
+        setInputs(array[itemIndex]); // Set inputs to the current todo item
+        setIsUpdateVisible(true);
+    } else {
+        console.error("Todo item not found for id:", id);
+    }
    }
-   const handleUpdateSubmit = () => {
-    const updatedArray = array.map((item, index) => 
-      index === currentId ? inputs : item
-    );
-    setArray(updatedArray);
-    setIsUpdateVisible(false);
-    toast.success("Task updated successfully");
+   const handleUpdateSubmit = async(currentId) => {
+
+    console.log("Updating task with ID:", currentId); // Log the currentId
+    console.log("Inputs to be updated:", inputs);
+    try {
+      // Send the updated data to the backend
+      const response = await axios.put(`http://localhost:8000/api/v1/updateTask/${currentId}`, inputs);
+      
+      // Update the local state with the new data
+      const updatedArray = array.map((item, index) => 
+          index === currentId ? response.data : item
+      );
+      
+      setArray(updatedArray);
+      setIsUpdateVisible(false);
+      toast.success("Task updated successfully");
+  } catch (error) {
+      console.error("Error updating task:", error);
+      toast.error("Failed to update task");
+  }
   };
   const handleUpdateClose =() =>{
     setIsUpdateVisible(false);
+     setInputs({ title: "", description: "" })
   }
   useEffect(()=>{
-    const fetch= async()=>{
-      await axios.get(`http://localhost:8000/api/v1/getTask/${id}`)
-      .then((response)=>{
-        setArray(response.data.list)
-     } )
+    if(id){
+      const fetch= async()=>{
+        await axios.get(`http://localhost:8000/api/v1/getTask/${id}`)
+        .then((response)=>{
+          setArray(response.data.list)
+       } )
+      }
+    fetch();
     }
-  fetch();
+    
   },[handleSubmit])
 
   return (
@@ -117,7 +147,12 @@ export const Todo = () => {
           <div className=' flex  flex-row flex-wrap justify-items-start'>
             {array && array.map((item,i)=>(
              <div key={i} className= 'w-[20%] h-[8vh] flex items-center justify-center columns-lg  mx-5 my-10'>
-             <TodoCards title={item.title} description={item.description} id={item._id} delId={del} onUpdate={handleUpdateClick}/>
+             <TodoCards title={item.title}
+              description={item.description}
+               id={item._id} 
+               delId={del}
+                onUpdate={handleUpdateClick}
+                />
              </div>
              ))}
             
@@ -131,6 +166,7 @@ export const Todo = () => {
             <div className='px-10'>
               <Update 
                 inputs={inputs} 
+            
                 handleChange={handleChange} 
                 handleUpdateSubmit={handleUpdateSubmit} 
                 handleUpdateClose={handleUpdateClose}
