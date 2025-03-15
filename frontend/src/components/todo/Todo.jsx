@@ -31,7 +31,8 @@ export const Todo = () => {
                   description: inputs.description,
                   id: sessionStorage.getItem("id"),
               });
-              console.log(response);
+          
+              setArray(prevArray => [...prevArray, response.data]);
               setInputs({ title: "", description: "" }); // Reset inputs after successful submission
             toast.success("Your Task is added");
               // This will log the response if the request is successful
@@ -39,10 +40,7 @@ export const Todo = () => {
               console.error("Error adding task:", error); // Log the error if the request fails
               toast.error("Failed to add task. Please try again.");
           }
-         
-          setInputs({title:"",description:""})
-          toast.success("Your Task is added")
-          
+                   
           }else{
             
             setInputs({title:"",description:""})
@@ -57,6 +55,7 @@ export const Todo = () => {
         data:{id:id},
       })
       .then(()=>{
+        setArray(prevArray => prevArray.filter(item => item._id !== taskId))
         toast.success("Task is deleted Successfully")
       })
     }else{
@@ -87,11 +86,12 @@ export const Todo = () => {
       const response = await axios.put(`http://localhost:8000/api/v1/updateTask/${currentId}`, inputs);
       
       // Update the local state with the new data
-      const updatedArray = array.map((item, index) => 
-          index === currentId ? response.data : item
+      const updatedArray = array.map((item) => 
+          item._id === currentId ? response.data : item
       );
       
       setArray(updatedArray);
+      setInputs({ title: "", description: "" })
       setIsUpdateVisible(false);
       toast.success("Task updated successfully");
   } catch (error) {
@@ -114,7 +114,7 @@ export const Todo = () => {
     fetch();
     }
     
-  },[handleSubmit])
+  },[id])
 
   return (
     <>
